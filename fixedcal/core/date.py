@@ -108,5 +108,13 @@ class FixedDate:
             return 4
         return ((self.day_of_year-1) // 91) + 1
 
-    # TODO: plus and minus operations
-    # TODO: equatable
+    def __eq__(self, o: "FixedDate") -> bool:
+        return self._day_of_year == o.day_of_year and self._year == o.year
+
+    def __gt__(self, o: "FixedDate") -> bool:
+        if self._year == o.year:
+            return self._day_of_year > o.day_of_year
+        return self._year > o.year
+
+    def __sub__(self, o: "FixedDate") -> timedelta:
+        return self.datetime - o.datetime
