@@ -1,4 +1,5 @@
 from datetime import datetime
+from math import floor
 
 class FixedDate:
     def __init__(self, date = None, day_of_year = None, year = None):
@@ -36,6 +37,10 @@ class FixedDate:
         return (day_of_year, year)
 
     @property
+    def day_of_year(self):
+        return self._day_of_year
+
+    @property
     def day_of_month(self):
         """In range 1...29"""
         return ((self._day_of_year-1) % 28) + 1
@@ -54,7 +59,17 @@ class FixedDate:
     def is_year_day(self) -> bool:
         return self.month == 14 and self.day_of_month == 1
 
-    # TODO: week of month
+    @property
+    def week_of_month(self) -> int:
+        """The ordinal of the week in month. Value 1 for year day.
+
+        Returns:
+            int: In range 1...4
+        """
+        if self.is_year_day:
+            return 1
+        return ((self.day_of_month-1) // 7) + 1
+
     # TODO: week of year
     # TODO: weekday
     # TODO: year quarter
