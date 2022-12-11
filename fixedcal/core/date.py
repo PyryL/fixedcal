@@ -116,5 +116,37 @@ class FixedDate:
             return self._day_of_year > o.day_of_year
         return self._year > o.year
 
-    def __sub__(self, o: "FixedDate") -> timedelta:
-        return self.datetime - o.datetime
+    def __add__(self, o: timedelta) -> "FixedDate":
+        """Addition of FixedDate and timedelta.
+        Does not modify this instance, but creates new one.
+
+        Args:
+            o (timedelta): The time delta that will be added.
+
+        Returns:
+            FixedDate: New FixedDate instance that will hold the new date.
+        """
+        new_date = self.datetime + o
+        return FixedDate(date=new_date)
+
+    def __sub__(self, o):
+        """Subtraction of FixedDate and some other value.
+        Does not modify either one of the values.
+
+        Args:
+            o (Union[FixedDate, timedelta]): The value that will be added.
+
+        Raises:
+            ValueError: Given argument was not FixedDate nor timedelta.
+
+        Returns:
+            Union[FixedDate, timedelta]: With FixedDate as argument,
+            timedelta will be returned representing the difference of given fixed dates.
+            With timedelta as argument, new FixedDate will be returned.
+        """
+        if isinstance(o, FixedDate):
+            return self.datetime - o.datetime
+        elif isinstance(o, timedelta):
+            new_date = self.datetime - o
+            return FixedDate(date=new_date)
+        raise ValueError("Invalid subtractor type, expected FixedDate or timedelta")
