@@ -95,7 +95,9 @@ class FixedDate:
 
     @property
     def is_year_day(self) -> bool:
-        return self.month == 14 and self.day_of_month == 1
+        if self.is_leap_year:
+            return self.day_of_year == 366
+        return self.day_of_year == 365
 
     @property
     def week_of_month(self) -> int:
