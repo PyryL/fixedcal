@@ -70,7 +70,15 @@ class FixedDate:
             return 1
         return ((self.day_of_month-1) // 7) + 1
 
-    # TODO: week of year
+    @property
+    def week_of_year(self) -> int:
+        """The ordinal of the week in year. Value 53 for year day.
+
+        Returns:
+            int: In range 1...53
+        """
+        return ((self._day_of_year-1) // 7) + 1
+
     # TODO: weekday
     # TODO: year quarter
     # TODO: datetime instance
