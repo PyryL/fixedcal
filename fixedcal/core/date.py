@@ -53,6 +53,15 @@ class FixedDate:
         return is_leap_year(self._year)
 
     @property
+    def is_leap_day(self) -> bool:
+        """Whether this fixed date is a leap day (June 29th in fixed) of IFC system.
+
+        Returns:
+            bool: Whether this is a leap day
+        """
+        return self.is_leap_year and self._day_of_year == 169
+
+    @property
     def datetime(self) -> datetime:
         """Construct a native datetime object from fixed date.
 
@@ -68,11 +77,15 @@ class FixedDate:
     @property
     def day_of_month(self):
         """In range 1...29"""
+        if self.is_leap_day:
+            return 29
         return ((self._day_of_year-1) % 28) + 1
 
     @property
     def month(self):
         """In range 1...13"""
+        if self.is_leap_day:
+            return 6
         return ((self._day_of_year-1) // 28) + 1
 
     @property
@@ -93,6 +106,8 @@ class FixedDate:
         """
         if self.is_year_day:
             return 1
+        if self.is_leap_day:
+            return 4
         return ((self.day_of_month-1) // 7) + 1
 
     @property
@@ -102,6 +117,8 @@ class FixedDate:
         Returns:
             int: 1 for Sunday, 2 for Monday, 7 for Saturday
         """
+        if self.is_leap_day:
+            return None
         return ((self.day_of_month-1) % 7) + 1
 
     @property
@@ -111,6 +128,8 @@ class FixedDate:
         Returns:
             int: In range 1...53
         """
+        if self.is_leap_day:
+            return 24
         return ((self._day_of_year-1) // 7) + 1
 
     @property

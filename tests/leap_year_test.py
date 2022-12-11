@@ -23,6 +23,18 @@ class TestLeapYear(unittest.TestCase):
         fixed_date = FixedDate(datetime(2000, 5, 4))
         self.assertTrue(fixed_date.is_leap_year)
 
+
+    def test_fixed_leap_day_properties(self):
+        # June 17th is the leap day of fixed calendar system
+        fixed_date = FixedDate(datetime(2024, 6, 17))
+        self.assertEqual(fixed_date.day_of_month, 29)
+        self.assertEqual(fixed_date.month, 6)
+        self.assertIsNone(fixed_date.weekday)
+        self.assertEqual(fixed_date.week_of_month, 4)
+        self.assertEqual(fixed_date.week_of_year, 24)
+        self.assertEqual(fixed_date.year_quarter, 2)
+
+
     def test_fixed_date_difference_over_gregorian_leap_day(self):
         # in Gregorian system there are 7 days between,
         # but in IFC the leap day is at the end of June
