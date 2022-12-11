@@ -10,6 +10,7 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.day_of_month, 1)
         self.assertEqual(fixed_date.day_of_year, 1)
         self.assertEqual(fixed_date.week_of_month, 1)
+        self.assertEqual(fixed_date.weekday, 1)
         self.assertEqual(fixed_date.week_of_year, 1)
 
     def test_datetime_init_february_last(self):
@@ -19,6 +20,7 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.day_of_month, 28)
         self.assertEqual(fixed_date.day_of_year, 56)
         self.assertEqual(fixed_date.week_of_month, 4)
+        self.assertEqual(fixed_date.weekday, 7)
         self.assertEqual(fixed_date.week_of_year, 8)
 
     def test_datetime_init_sol_month(self):
