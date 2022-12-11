@@ -76,3 +76,7 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.weekday, 1)
         self.assertEqual(fixed_date.week_of_year, 53)
         self.assertEqual(fixed_date.year_quarter, 4)
+
+    def test_today(self):
+        fixed_date_datetime = FixedDate.today().datetime
+        self.assertEqual(fixed_date_datetime.date(), datetime.today().date())

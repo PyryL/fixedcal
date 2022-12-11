@@ -36,6 +36,10 @@ class FixedDate:
         """
         return (day_of_year, year)
 
+    @classmethod
+    def today(self) -> "FixedDate":
+        return FixedDate(date=datetime.today())
+
     @property
     def datetime(self) -> datetime:
         """Construct a native datetime object from fixed date.
