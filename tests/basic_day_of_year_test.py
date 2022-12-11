@@ -31,6 +31,6 @@ class TestBasicDayOfYearInit(unittest.TestCase):
     def test_day_of_year_init_year_day(self):
         fixed_date = FixedDate(day_of_year=365, year=2022)      # 2022-12-31 Gregorian
         self.assertEqual(fixed_date.year, 2022)
-        self.assertEqual(fixed_date.month, 14)
-        self.assertEqual(fixed_date.day_of_month, 1)
+        self.assertEqual(fixed_date.month, 13)
+        self.assertEqual(fixed_date.day_of_month, 29)
         self.assertTrue(fixed_date.is_year_day)

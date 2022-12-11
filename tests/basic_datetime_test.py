@@ -68,13 +68,13 @@ class TestBasicDatetimeInit(unittest.TestCase):
         fixed_date = FixedDate(date=datetime(2022, 12, 31))
         self.assertEqual(fixed_date.datetime, datetime(2022, 12, 31))
         self.assertEqual(fixed_date.year, 2022)
-        self.assertEqual(fixed_date.month, 14)
-        self.assertEqual(fixed_date.day_of_month, 1)
+        self.assertEqual(fixed_date.month, 13)
+        self.assertEqual(fixed_date.day_of_month, 29)
         self.assertTrue(fixed_date.is_year_day)
         self.assertEqual(fixed_date.day_of_year, 365)
-        self.assertEqual(fixed_date.week_of_month, 1)
-        self.assertEqual(fixed_date.weekday, 1)
-        self.assertEqual(fixed_date.week_of_year, 53)
+        self.assertEqual(fixed_date.week_of_month, 4)
+        self.assertIsNone(fixed_date.weekday)
+        self.assertEqual(fixed_date.week_of_year, 52)
         self.assertEqual(fixed_date.year_quarter, 4)
 
     def test_today(self):

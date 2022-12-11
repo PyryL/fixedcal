@@ -13,4 +13,4 @@ class TestStringRepresentation(unittest.TestCase):
 
     def test_string_of_year_day(self):
         fixed_date = FixedDate(day_of_year=365, year=2022)
-        self.assertEqual(str(fixed_date), "2022-14-01")
+        self.assertEqual(str(fixed_date), "2022-13-29")

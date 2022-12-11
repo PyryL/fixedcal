@@ -38,8 +38,8 @@ class TestLeapYear(unittest.TestCase):
         fixed_date = FixedDate(day_of_year=366, year=2024)
         self.assertTrue(fixed_date.is_year_day)
         self.assertEqual(fixed_date.year, 2024)
-        self.assertEqual(fixed_date.month, 14)
-        self.assertEqual(fixed_date.day_of_month, 1)
+        self.assertEqual(fixed_date.month, 13)
+        self.assertEqual(fixed_date.day_of_month, 29)
 
     def test_ordinary_date_after_leap_day(self):
         fixed_date = FixedDate(datetime(2024, 10, 13))

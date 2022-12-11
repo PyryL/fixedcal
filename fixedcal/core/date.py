@@ -77,7 +77,7 @@ class FixedDate:
     @property
     def day_of_month(self):
         """In range 1...29"""
-        if self.is_leap_day:
+        if self.is_leap_day or self.is_year_day:
             return 29
         if self.is_leap_year and self.day_of_year > 169: # leap day past this year
             return ((self._day_of_year-2) % 28) + 1
@@ -88,6 +88,8 @@ class FixedDate:
         """In range 1...13"""
         if self.is_leap_day:
             return 6
+        if self.is_year_day:
+            return 13
         return ((self._day_of_year-1) // 28) + 1
 
     @property
@@ -98,19 +100,17 @@ class FixedDate:
     @property
     def is_year_day(self) -> bool:
         if self.is_leap_year:
-            return self.day_of_year == 366
-        return self.day_of_year == 365
+            return self._day_of_year == 366
+        return self._day_of_year == 365
 
     @property
     def week_of_month(self) -> int:
-        """The ordinal of the week in month. Value 1 for year day.
+        """The ordinal of the week in month.
 
         Returns:
             int: In range 1...4
         """
-        if self.is_year_day:
-            return 1
-        if self.is_leap_day:
+        if self.is_leap_day or self.is_year_day:
             return 4
         return ((self.day_of_month-1) // 7) + 1
 
@@ -119,26 +119,29 @@ class FixedDate:
         """Ordinal of the day in week. Value 1 for year day.
 
         Returns:
-            int: 1 for Sunday, 2 for Monday, 7 for Saturday
+            Optional[int]: 1 for Sunday, 2 for Monday, 7 for Saturday
+            None for leap day and year day.
         """
-        if self.is_leap_day:
+        if self.is_leap_day or self.is_year_day:
             return None
         return ((self.day_of_month-1) % 7) + 1
 
     @property
     def week_of_year(self) -> int:
-        """The ordinal of the week in year. Value 53 for year day.
+        """The ordinal of the week in year.
 
         Returns:
-            int: In range 1...53
+            int: In range 1...52
         """
         if self.is_leap_day:
             return 24
+        if self.is_year_day:
+            return 52
         return ((self._day_of_year-1) // 7) + 1
 
     @property
     def year_quarter(self) -> int:
-        """Quarter of the year. Value 4 for year day.
+        """Quarter of the year.
 
         Returns:
             int: In range 1...4

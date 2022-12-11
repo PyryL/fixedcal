@@ -72,12 +72,12 @@ jan_first < fixed_date                # False
 Year day is the day after the last of December and before the first of January.
 For that date, `FixedDate` gives the following property values.
 
-* `day_of_year` = 365
-* `day_of_month` = 1
-* `month` = 14
+* `day_of_year` = 365 (366 on leap years)
+* `day_of_month` = 29
+* `month` = 13
 * `year` is obviously the ending year
 * `is_year_day` = True
-* `week_of_month` = 1
-* `weekday` = 1
-* `week_of_year` = 53
+* `week_of_month` = 4
+* `weekday` = None
+* `week_of_year` = 52
 * `year_quarter` = 4
