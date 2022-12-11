@@ -34,6 +34,18 @@ class TestLeapYear(unittest.TestCase):
         self.assertEqual(fixed_date.week_of_year, 24)
         self.assertEqual(fixed_date.year_quarter, 2)
 
+    def test_year_day_of_leap_year(self):
+        fixed_date = FixedDate(day_of_year=366, year=2024)
+        self.assertTrue(fixed_date.is_year_day)
+        self.assertEqual(fixed_date.year, 2024)
+        self.assertEqual(fixed_date.month, 14)
+        self.assertEqual(fixed_date.day_of_month, 1)
+
+    def test_ordinary_date_after_leap_day(self):
+        fixed_date = FixedDate(datetime(2024, 10, 13))
+        self.assertEqual(fixed_date.month, 11)
+        self.assertEqual(fixed_date.day_of_month, 6)
+
 
     def test_fixed_date_difference_over_gregorian_leap_day(self):
         # in Gregorian system there are 7 days between,

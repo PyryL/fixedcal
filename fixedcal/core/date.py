@@ -79,6 +79,8 @@ class FixedDate:
         """In range 1...29"""
         if self.is_leap_day:
             return 29
+        if self.is_leap_year and self.day_of_year > 169: # leap day past this year
+            return ((self._day_of_year-2) % 28) + 1
         return ((self._day_of_year-1) % 28) + 1
 
     @property
