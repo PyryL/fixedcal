@@ -1,5 +1,7 @@
 # FixedCal
 
+[![CI](https://github.com/PyryL/fixedcal/actions/workflows/main.yml/badge.svg)](https://github.com/PyryL/fixedcal/actions)
+
 Python package for international fixed calendar dates.
 
 ## What is that?
