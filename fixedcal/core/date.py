@@ -88,7 +88,17 @@ class FixedDate:
         """
         return ((self._day_of_year-1) // 7) + 1
 
-    # TODO: year quarter
+    @property
+    def year_quarter(self) -> int:
+        """Quarter of the year. Value 4 for year day.
+
+        Returns:
+            int: In range 1...4
+        """
+        if self.is_year_day:
+            return 4
+        return ((self.day_of_year-1) // 91) + 1
+
     # TODO: datetime instance
     # TODO: plus and minus operations
     # TODO: equatable
