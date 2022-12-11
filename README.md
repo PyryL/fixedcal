@@ -69,7 +69,7 @@ jan_first < fixed_date                # False
 
 ### Year day
 
-Year day is the day after the last of December and before the first of January.
+Year day is the day after the last of December and before the first of January (December 31st Gregorian).
 For that date, `FixedDate` gives the following property values.
 
 * `day_of_year` = 365 (366 on leap years)
@@ -81,3 +81,19 @@ For that date, `FixedDate` gives the following property values.
 * `weekday` = None
 * `week_of_year` = 52
 * `year_quarter` = 4
+
+### Leap day
+
+In IFC the leap year is defined in the same way as in the Gregorian system.
+The leap day is, however, placed after the last of June and before the first of Sol (June 17th Gregorian).
+`FixedDate` gives the following property values for leap day.
+
+* `day_of_year` = 169
+* `day_of_month` = 29
+* `month` = 6
+* `year` the year
+* `is_leap_day` = True
+* `week_of_month` = 4
+* `weekday` = None
+* `week_of_year` = 24
+* `year_quarter` = 2
