@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from math import floor
+from fixedcal.services.leap_days import is_leap_year, gregorian_leap_days_between, fixed_leap_days_between
 
 class FixedDate:
     def __init__(self, date = None, day_of_year = None, year = None):
@@ -39,6 +39,18 @@ class FixedDate:
     @classmethod
     def today(self) -> "FixedDate":
         return FixedDate(date=datetime.today())
+
+    @property
+    def is_leap_year(self) -> bool:
+        """Whether the year of this date is leap year.
+
+        Returns:
+            bool: Is this leap year
+        """
+        # if self._year % 100 == 0:
+        #     return self._year % 4 == 0 and self._year % 400 == 0
+        # return self._year % 4 == 0
+        return is_leap_year(self._year)
 
     @property
     def datetime(self) -> datetime:
@@ -149,7 +161,10 @@ class FixedDate:
             With timedelta as argument, new FixedDate will be returned.
         """
         if isinstance(o, FixedDate):
-            return self.datetime - o.datetime
+            difference = self.datetime - o.datetime
+            greg_leap_days = gregorian_leap_days_between(self.datetime, o.datetime)
+            fixed_leap_days = fixed_leap_days_between(self.datetime, o.datetime)
+            return difference - timedelta(greg_leap_days) + timedelta(fixed_leap_days)
         elif isinstance(o, timedelta):
             new_date = self.datetime - o
             return FixedDate(date=new_date)
