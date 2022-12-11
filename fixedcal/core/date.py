@@ -150,3 +150,12 @@ class FixedDate:
             new_date = self.datetime - o
             return FixedDate(date=new_date)
         raise ValueError("Invalid subtractor type, expected FixedDate or timedelta")
+
+    def __str__(self) -> str:
+        """String representation of fixed date.
+        For year day, month is 14 and date 1.
+
+        Returns:
+            str: Date as YYYY-MM-DD
+        """
+        return f"{self._year:04.0f}-{self.month:02.0f}-{self.day_of_month:02.0f}"
