@@ -21,4 +21,4 @@ jobs:
       - name: Init environment
         run: poetry install
       - name: Unit tests
-        run: poetry run pytest src
+        run: poetry run pytest tests
