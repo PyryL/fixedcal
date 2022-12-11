@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import floor
 
 class FixedDate:
@@ -35,6 +35,15 @@ class FixedDate:
             tuple: day of year (1...366) and year (1...9999) in a tuple
         """
         return (day_of_year, year)
+
+    @property
+    def datetime(self) -> datetime:
+        """Construct a native datetime object from fixed date.
+
+        Returns:
+            datetime: Datetime equal to the fixed date.
+        """
+        return datetime(self.year, 1, 1) + timedelta(self._day_of_year-1)
 
     @property
     def day_of_year(self):
@@ -99,6 +108,5 @@ class FixedDate:
             return 4
         return ((self.day_of_year-1) // 91) + 1
 
-    # TODO: datetime instance
     # TODO: plus and minus operations
     # TODO: equatable
