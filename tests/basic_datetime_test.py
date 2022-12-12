@@ -1,5 +1,4 @@
 import unittest
-# from datetime import datetime
 import datetime
 from fixedcal.core.date import FixedDate
 

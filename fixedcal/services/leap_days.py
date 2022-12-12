@@ -1,4 +1,3 @@
-# from datetime import datetime, timedelta
 import datetime
 
 def is_leap_year(year: int) -> bool:
@@ -11,8 +10,8 @@ def gregorian_leap_days_between(date1: datetime.date, date2: datetime.date) -> i
     Count includes both ends (date1 and date2 themselves).
 
     Args:
-        date1 (datetime): The beginning of the count
-        date2 (datetime): The end of the count
+        date1 (datetime.date): The beginning of the count
+        date2 (datetime.date): The end of the count
 
     Returns:
         int: Count of the leap days.

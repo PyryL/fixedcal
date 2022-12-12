@@ -1,7 +1,6 @@
 """Module containing class for IFC date"""
 
-import datetime # as dt
-# from datetime import date, datetime, timedelta
+import datetime
 from fixedcal.services.leap_days import is_leap_year,\
     gregorian_leap_days_between, fixed_leap_days_between
 
@@ -206,7 +205,7 @@ class FixedDate:
         Does not modify either one of the values.
 
         Args:
-            o (Union[FixedDate, timedelta]): The value that will be added.
+            o (Union[FixedDate, datetime.timedelta]): The value that will be added.
 
         Raises:
             ValueError: Given argument was not FixedDate nor timedelta.
