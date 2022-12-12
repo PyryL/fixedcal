@@ -44,6 +44,8 @@ fixed_date.day_of_month   # 28
 fixed_date.month          # 8
 fixed_date.year           # 2022
 fixed_date.is_year_day    # False
+fixed_date.is_leap_day    # False
+fixed_date.is_leap_year   # False
 fixed_date.week_of_month  # 4
 fixed_date.weekday        # 7
 fixed_date.week_of_year   # 32
@@ -55,8 +57,11 @@ fixed_date.year_quarter   # 3
 ```python3
 from fixedcal import FixedDate
 from datetime import datetime, timedelta
+
 fixed_date = FixedDate(datetime(2022, 12, 6))
 jan_first = FixedDate(datetime(2023, 1, 1))
+
+str(fixed_date)                       # 2022-13-04
 
 new_fixed = fixed_date + timedelta(3) # FixedDate 3 days ahead
 new_fixed = fixed_date - timedelta(2) # FixedDate 2 days before
