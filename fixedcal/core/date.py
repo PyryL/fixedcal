@@ -1,28 +1,46 @@
+"""Module containing class for IFC date"""
+
+import datetime as dt
 from datetime import datetime, timedelta
-from fixedcal.services.leap_days import is_leap_year, gregorian_leap_days_between, fixed_leap_days_between
+from fixedcal.services.leap_days import is_leap_year,\
+    gregorian_leap_days_between, fixed_leap_days_between
 
 class FixedDate:
-    def __init__(self, date = None, day_of_year = None, year = None):
+    """IFC date
+
+    Construct the date by passing either date argument or
+    both day_of_year and year arguments.
+
+    Args:
+        date (Optional[datetime.datetime]): Gregorian date that will be represented
+        day_of_year (Optional[int]): The ordinal of the date in year. In range 1...366.
+        year (Optional[int]): The year in range 1...9999.
+    """
+
+    def __init__(self,
+                date: dt.datetime = None,
+                day_of_year: int = None,
+                year: int = None) -> None:
         if date is not None:
             init_tuple = self._from_datetime(date)
         elif day_of_year is not None and year is not None:
             init_tuple = self._from_day_of_year(day_of_year, year)
         else:
             raise ValueError("Invalid FixedDate initialization")
-        
+
         self._day_of_year, self._year = init_tuple
 
-    def _from_datetime(self, _datetime: datetime) -> tuple:
+    def _from_datetime(self, date: dt.datetime) -> tuple:
         """Initialize this class with native datetime object.
 
         Args:
-            _datetime (datetime): _description_
+            date (datetime): _description_
 
         Returns:
             tuple: day of year (1...366) and year (1...9999) in a tuple
         """
-        day_of_year = _datetime.timetuple().tm_yday
-        return self._from_day_of_year(day_of_year, _datetime.year)
+        day_of_year = date.timetuple().tm_yday
+        return self._from_day_of_year(day_of_year, date.year)
 
     def _from_day_of_year(self, day_of_year: int, year: int) -> tuple:
         """Initialize this class with day of year and year.
@@ -37,7 +55,12 @@ class FixedDate:
         return (day_of_year, year)
 
     @classmethod
-    def today(self) -> "FixedDate":
+    def today(cls) -> "FixedDate":
+        """Initialize fixed date representing today.
+
+        Returns:
+            FixedDate: Today as fixed date.
+        """
         return FixedDate(date=datetime.today())
 
     @property
@@ -71,7 +94,12 @@ class FixedDate:
         return datetime(self.year, 1, 1) + timedelta(self._day_of_year-1)
 
     @property
-    def day_of_year(self):
+    def day_of_year(self) -> int:
+        """Ordinal of the day in year. In range 1...366.
+
+        Returns:
+            int: Ordinal in year.
+        """
         return self._day_of_year
 
     @property
@@ -99,6 +127,11 @@ class FixedDate:
 
     @property
     def is_year_day(self) -> bool:
+        """Whether the day is year day.
+
+        Returns:
+            bool: Is the day year day
+        """
         if self.is_leap_year:
             return self._day_of_year == 366
         return self._day_of_year == 365
@@ -150,15 +183,15 @@ class FixedDate:
             return 4
         return ((self.day_of_year-1) // 91) + 1
 
-    def __eq__(self, o: "FixedDate") -> bool:
-        return self._day_of_year == o.day_of_year and self._year == o.year
+    def __eq__(self, other: "FixedDate") -> bool:
+        return self._day_of_year == other.day_of_year and self._year == other.year
 
-    def __gt__(self, o: "FixedDate") -> bool:
-        if self._year == o.year:
-            return self._day_of_year > o.day_of_year
-        return self._year > o.year
+    def __gt__(self, other: "FixedDate") -> bool:
+        if self._year == other.year:
+            return self._day_of_year > other.day_of_year
+        return self._year > other.year
 
-    def __add__(self, o: timedelta) -> "FixedDate":
+    def __add__(self, other: timedelta) -> "FixedDate":
         """Addition of FixedDate and timedelta.
         Does not modify this instance, but creates new one.
 
@@ -168,10 +201,10 @@ class FixedDate:
         Returns:
             FixedDate: New FixedDate instance that will hold the new date.
         """
-        new_date = self.datetime + o
+        new_date = self.datetime + other
         return FixedDate(date=new_date)
 
-    def __sub__(self, o):
+    def __sub__(self, other):
         """Subtraction of FixedDate and some other value.
         Does not modify either one of the values.
 
@@ -186,13 +219,13 @@ class FixedDate:
             timedelta will be returned representing the difference of given fixed dates.
             With timedelta as argument, new FixedDate will be returned.
         """
-        if isinstance(o, FixedDate):
-            difference = self.datetime - o.datetime
-            greg_leap_days = gregorian_leap_days_between(self.datetime, o.datetime)
-            fixed_leap_days = fixed_leap_days_between(self.datetime, o.datetime)
+        if isinstance(other, FixedDate):
+            difference = self.datetime - other.datetime
+            greg_leap_days = gregorian_leap_days_between(self.datetime, other.datetime)
+            fixed_leap_days = fixed_leap_days_between(self.datetime, other.datetime)
             return difference - timedelta(greg_leap_days) + timedelta(fixed_leap_days)
-        elif isinstance(o, timedelta):
-            new_date = self.datetime - o
+        if isinstance(other, timedelta):
+            new_date = self.datetime - other
             return FixedDate(date=new_date)
         raise ValueError("Invalid subtractor type, expected FixedDate or timedelta")
 
