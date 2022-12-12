@@ -21,4 +21,8 @@ jobs:
       - name: Init environment
         run: poetry install
       - name: Unit tests
-        run: poetry run pytest tests
+        run: poetry run coverage run --branch -m pytest tests
+      - name: Write coverage report
+        run: poetry run coverage xml
+      - name: Send coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
