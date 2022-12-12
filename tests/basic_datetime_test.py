@@ -80,3 +80,10 @@ class TestBasicDateInit(unittest.TestCase):
     def test_today(self):
         fixed_date_datetime = FixedDate.today().date
         self.assertEqual(fixed_date_datetime, datetime.date.today())
+
+    def test_init_with_invalid_parameter_type(self):
+        self.assertRaises(ValueError, lambda : FixedDate(date="today"))
+
+    def test_init_with_invalid_parameter_combination(self):
+        # day_of_year also requires year parameter
+        self.assertRaises(ValueError, lambda : FixedDate(day_of_year=15))

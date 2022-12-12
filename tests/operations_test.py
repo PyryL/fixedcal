@@ -16,6 +16,10 @@ class TestOperations(unittest.TestCase):
     def test_greather_than_with_true_expected(self):
         self.assertTrue(self.fixed2 > self.fixed1)
 
+    def test_greather_than_with_different_years(self):
+        another_year = FixedDate(date=datetime.date(2023, 12, 5))
+        self.assertTrue(another_year > self.fixed1)
+
     def test_greather_than_with_false_expected(self):
         self.assertFalse(self.fixed1 > self.fixed2)
 

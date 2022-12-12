@@ -20,9 +20,9 @@ class FixedDate:
                 date: datetime.date = None,
                 day_of_year: int = None,
                 year: int = None) -> None:
-        if date is not None:
+        if isinstance(date, datetime.date):
             init_tuple = self._from_datetime(date)
-        elif day_of_year is not None and year is not None:
+        elif isinstance(day_of_year, int) and isinstance(year, int):
             init_tuple = self._from_day_of_year(day_of_year, year)
         else:
             raise ValueError("Invalid FixedDate initialization")
