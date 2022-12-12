@@ -219,7 +219,7 @@ class FixedDate:
             difference = self.date - other.date
             greg_leap_days = gregorian_leap_days_between(self.date, other.date)
             fixed_leap_days = fixed_leap_days_between(self.date, other.date)
-            return difference - datetime.timedelta(greg_leap_days) + datetime.timedelta(fixed_leap_days)
+            return difference + datetime.timedelta(fixed_leap_days - greg_leap_days)
         if isinstance(other, datetime.timedelta):
             new_date = self.date - other
             return FixedDate(date=new_date)
