@@ -1,7 +1,6 @@
 """Module containing class for IFC date"""
 
-import datetime as dt
-from datetime import datetime, timedelta
+import datetime
 from fixedcal.services.leap_days import is_leap_year,\
     gregorian_leap_days_between, fixed_leap_days_between
 
@@ -12,13 +11,13 @@ class FixedDate:
     both day_of_year and year arguments.
 
     Args:
-        date (Optional[datetime.datetime]): Gregorian date that will be represented
+        date (Optional[datetime.date]): Gregorian date that will be represented
         day_of_year (Optional[int]): The ordinal of the date in year. In range 1...366.
         year (Optional[int]): The year in range 1...9999.
     """
 
     def __init__(self,
-                date: dt.datetime = None,
+                date: datetime.date = None,
                 day_of_year: int = None,
                 year: int = None) -> None:
         if date is not None:
@@ -30,11 +29,11 @@ class FixedDate:
 
         self._day_of_year, self._year = init_tuple
 
-    def _from_datetime(self, date: dt.datetime) -> tuple:
+    def _from_datetime(self, date: datetime.date) -> tuple:
         """Initialize this class with native datetime object.
 
         Args:
-            date (datetime): _description_
+            date (datetime.date): _description_
 
         Returns:
             tuple: day of year (1...366) and year (1...9999) in a tuple
@@ -61,7 +60,7 @@ class FixedDate:
         Returns:
             FixedDate: Today as fixed date.
         """
-        return FixedDate(date=datetime.today())
+        return FixedDate(date=datetime.date.today())
 
     @property
     def is_leap_year(self) -> bool:
@@ -70,9 +69,6 @@ class FixedDate:
         Returns:
             bool: Is this leap year
         """
-        # if self._year % 100 == 0:
-        #     return self._year % 4 == 0 and self._year % 400 == 0
-        # return self._year % 4 == 0
         return is_leap_year(self._year)
 
     @property
@@ -85,13 +81,13 @@ class FixedDate:
         return self.is_leap_year and self._day_of_year == 169
 
     @property
-    def datetime(self) -> datetime:
-        """Construct a native datetime object from fixed date.
+    def date(self) -> datetime.date:
+        """Construct a native date object from fixed date.
 
         Returns:
-            datetime: Datetime equal to the fixed date.
+            datetime.date: Native date equal to the fixed date.
         """
-        return datetime(self.year, 1, 1) + timedelta(self._day_of_year-1)
+        return datetime.date(self.year, 1, 1) + datetime.timedelta(self._day_of_year-1)
 
     @property
     def day_of_year(self) -> int:
@@ -191,17 +187,17 @@ class FixedDate:
             return self._day_of_year > other.day_of_year
         return self._year > other.year
 
-    def __add__(self, other: timedelta) -> "FixedDate":
+    def __add__(self, other: datetime.timedelta) -> "FixedDate":
         """Addition of FixedDate and timedelta.
         Does not modify this instance, but creates new one.
 
         Args:
-            o (timedelta): The time delta that will be added.
+            o (datetime.timedelta): The time delta that will be added.
 
         Returns:
             FixedDate: New FixedDate instance that will hold the new date.
         """
-        new_date = self.datetime + other
+        new_date = self.date + other
         return FixedDate(date=new_date)
 
     def __sub__(self, other):
@@ -209,23 +205,23 @@ class FixedDate:
         Does not modify either one of the values.
 
         Args:
-            o (Union[FixedDate, timedelta]): The value that will be added.
+            o (Union[FixedDate, datetime.timedelta]): The value that will be added.
 
         Raises:
             ValueError: Given argument was not FixedDate nor timedelta.
 
         Returns:
-            Union[FixedDate, timedelta]: With FixedDate as argument,
+            Union[FixedDate, datetime.timedelta]: With FixedDate as argument,
             timedelta will be returned representing the difference of given fixed dates.
             With timedelta as argument, new FixedDate will be returned.
         """
         if isinstance(other, FixedDate):
-            difference = self.datetime - other.datetime
-            greg_leap_days = gregorian_leap_days_between(self.datetime, other.datetime)
-            fixed_leap_days = fixed_leap_days_between(self.datetime, other.datetime)
-            return difference - timedelta(greg_leap_days) + timedelta(fixed_leap_days)
-        if isinstance(other, timedelta):
-            new_date = self.datetime - other
+            difference = self.date - other.date
+            greg_leap_days = gregorian_leap_days_between(self.date, other.date)
+            fixed_leap_days = fixed_leap_days_between(self.date, other.date)
+            return difference + datetime.timedelta(fixed_leap_days - greg_leap_days)
+        if isinstance(other, datetime.timedelta):
+            new_date = self.date - other
             return FixedDate(date=new_date)
         raise ValueError("Invalid subtractor type, expected FixedDate or timedelta")
 

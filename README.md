@@ -23,8 +23,8 @@ from fixedcal import FixedDate
 fixed_date = FixedDate.today()
 
 # From native datetime
-from datetime import datetime
-february_seventh = datetime(2022, 2, 7)
+import datetime
+february_seventh = datetime.date(2022, 2, 7)
 fixed_date = FixedDate(february_seventh)
 
 # From day's ordinal in year
@@ -35,10 +35,10 @@ fixed_date = FixedDate(day_of_year=107, year=2022)
 
 ```python3
 from fixedcal import FixedDate
-from datetime import datetime
-fixed_date = FixedDate(datetime(2022, 8, 12))
+import datetime
+fixed_date = FixedDate(datetime.date(2022, 8, 12))
 
-fixed_date.datetime       # datetime(2022, 8, 12, 0, 0, 0)
+fixed_date.date           # datetime.date(2022, 8, 12)
 fixed_date.day_of_year    # 224
 fixed_date.day_of_month   # 28
 fixed_date.month          # 8
@@ -56,10 +56,10 @@ fixed_date.year_quarter   # 3
 
 ```python3
 from fixedcal import FixedDate
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 
-fixed_date = FixedDate(datetime(2022, 12, 6))
-jan_first = FixedDate(datetime(2023, 1, 1))
+fixed_date = FixedDate(date(2022, 12, 6))
+jan_first = FixedDate(date(2023, 1, 1))
 
 str(fixed_date)                       # 2022-13-04
 

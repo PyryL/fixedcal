@@ -1,11 +1,11 @@
 import unittest
-from datetime import datetime
+import datetime
 from fixedcal.core.date import FixedDate
 
-class TestBasicDatetimeInit(unittest.TestCase):
-    def test_datetime_init_january_first(self):
-        fixed_date = FixedDate(date=datetime(2022, 1, 1))
-        self.assertEqual(fixed_date.datetime, datetime(2022, 1, 1))
+class TestBasicDateInit(unittest.TestCase):
+    def test_date_init_january_first(self):
+        fixed_date = FixedDate(date=datetime.date(2022, 1, 1))
+        self.assertEqual(fixed_date.date, datetime.date(2022, 1, 1))
         self.assertEqual(fixed_date.year, 2022)
         self.assertEqual(fixed_date.month, 1)
         self.assertEqual(fixed_date.day_of_month, 1)
@@ -15,9 +15,9 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.week_of_year, 1)
         self.assertEqual(fixed_date.year_quarter, 1)
 
-    def test_datetime_init_february_last(self):
-        fixed_date = FixedDate(date=datetime(2022, 2, 25))
-        self.assertEqual(fixed_date.datetime, datetime(2022, 2, 25))
+    def test_date_init_february_last(self):
+        fixed_date = FixedDate(date=datetime.date(2022, 2, 25))
+        self.assertEqual(fixed_date.date, datetime.date(2022, 2, 25))
         self.assertEqual(fixed_date.year, 2022)
         self.assertEqual(fixed_date.month, 2)
         self.assertEqual(fixed_date.day_of_month, 28)
@@ -27,9 +27,9 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.week_of_year, 8)
         self.assertEqual(fixed_date.year_quarter, 1)
 
-    def test_datetime_init_sol_month(self):
-        fixed_date = FixedDate(date=datetime(2022, 6, 20))
-        self.assertEqual(fixed_date.datetime, datetime(2022, 6, 20))
+    def test_date_init_sol_month(self):
+        fixed_date = FixedDate(date=datetime.date(2022, 6, 20))
+        self.assertEqual(fixed_date.date, datetime.date(2022, 6, 20))
         self.assertEqual(fixed_date.year, 2022)
         self.assertEqual(fixed_date.month, 7)
         self.assertEqual(fixed_date.day_of_month, 3)
@@ -39,9 +39,9 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.week_of_year, 25)
         self.assertEqual(fixed_date.year_quarter, 2)
 
-    def test_datetime_init_middle_of_september(self):
-        fixed_date = FixedDate(date=datetime(2022, 9, 15))
-        self.assertEqual(fixed_date.datetime, datetime(2022, 9, 15))
+    def test_date_init_middle_of_september(self):
+        fixed_date = FixedDate(date=datetime.date(2022, 9, 15))
+        self.assertEqual(fixed_date.date, datetime.date(2022, 9, 15))
         self.assertEqual(fixed_date.year, 2022)
         self.assertEqual(fixed_date.month, 10)
         self.assertEqual(fixed_date.day_of_month, 6)
@@ -51,9 +51,9 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.week_of_year, 37)
         self.assertEqual(fixed_date.year_quarter, 3)
 
-    def test_datetime_init_december_last(self):
-        fixed_date = FixedDate(date=datetime(2022, 12, 30))
-        self.assertEqual(fixed_date.datetime, datetime(2022, 12, 30))
+    def test_date_init_december_last(self):
+        fixed_date = FixedDate(date=datetime.date(2022, 12, 30))
+        self.assertEqual(fixed_date.date, datetime.date(2022, 12, 30))
         self.assertEqual(fixed_date.year, 2022)
         self.assertEqual(fixed_date.month, 13)
         self.assertEqual(fixed_date.day_of_month, 28)
@@ -64,9 +64,9 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.week_of_year, 52)
         self.assertEqual(fixed_date.year_quarter, 4)
 
-    def test_datetime_init_year_day(self):
-        fixed_date = FixedDate(date=datetime(2022, 12, 31))
-        self.assertEqual(fixed_date.datetime, datetime(2022, 12, 31))
+    def test_date_init_year_day(self):
+        fixed_date = FixedDate(date=datetime.date(2022, 12, 31))
+        self.assertEqual(fixed_date.date, datetime.date(2022, 12, 31))
         self.assertEqual(fixed_date.year, 2022)
         self.assertEqual(fixed_date.month, 13)
         self.assertEqual(fixed_date.day_of_month, 29)
@@ -78,5 +78,5 @@ class TestBasicDatetimeInit(unittest.TestCase):
         self.assertEqual(fixed_date.year_quarter, 4)
 
     def test_today(self):
-        fixed_date_datetime = FixedDate.today().datetime
-        self.assertEqual(fixed_date_datetime.date(), datetime.today().date())
+        fixed_date_datetime = FixedDate.today().date
+        self.assertEqual(fixed_date_datetime, datetime.date.today())

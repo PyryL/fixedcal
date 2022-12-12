@@ -1,11 +1,11 @@
 import unittest
-from datetime import datetime, timedelta
+import datetime
 from fixedcal.core.date import FixedDate
 
 class TestOperations(unittest.TestCase):
     def setUp(self):
-        self.fixed1 = FixedDate(date=datetime(2022, 12, 5))
-        self.fixed2 = FixedDate(date=datetime(2022, 12, 6))
+        self.fixed1 = FixedDate(date=datetime.date(2022, 12, 5))
+        self.fixed2 = FixedDate(date=datetime.date(2022, 12, 6))
 
     def test_equal_with_two_same(self):
         self.assertTrue(self.fixed1 == self.fixed1)
@@ -26,33 +26,33 @@ class TestOperations(unittest.TestCase):
         self.assertTrue(self.fixed1 < self.fixed2)
 
     def test_subtration_of_two_dates(self):
-        self.assertEqual(self.fixed2-self.fixed1, timedelta(1))
+        self.assertEqual(self.fixed2-self.fixed1, datetime.timedelta(1))
 
     def test_subtration_of_two_dates_with_smaller_first(self):
-        self.assertEqual(self.fixed1-self.fixed2, timedelta(-1))
+        self.assertEqual(self.fixed1-self.fixed2, datetime.timedelta(-1))
 
     def test_subtration_of_two_same_dates(self):
-        self.assertEqual(self.fixed1-self.fixed1, timedelta(0))
+        self.assertEqual(self.fixed1-self.fixed1, datetime.timedelta(0))
 
     def test_subtraction_of_timedelta(self):
-        result = self.fixed1 - timedelta(7)
-        self.assertEqual(result, FixedDate(date=datetime(2022, 11, 28)))
+        result = self.fixed1 - datetime.timedelta(7)
+        self.assertEqual(result, FixedDate(date=datetime.date(2022, 11, 28)))
 
     def test_subtraction_of_negative_timedelta(self):
-        result = self.fixed1 - timedelta(-2)
-        self.assertEqual(result, FixedDate(date=datetime(2022, 12, 7)))
+        result = self.fixed1 - datetime.timedelta(-2)
+        self.assertEqual(result, FixedDate(date=datetime.date(2022, 12, 7)))
 
     def test_subtraction_of_invalid_type(self):
         self.assertRaises(ValueError, lambda : self.fixed1 - 3)
 
     def test_addition_of_timedelta(self):
-        result = self.fixed1 + timedelta(3)
-        self.assertEqual(result, FixedDate(date=datetime(2022, 12, 8)))
+        result = self.fixed1 + datetime.timedelta(3)
+        self.assertEqual(result, FixedDate(date=datetime.date(2022, 12, 8)))
 
     def test_addition_of_negative_timedelta(self):
-        result = self.fixed1 + timedelta(-3)
-        self.assertEqual(result, FixedDate(date=datetime(2022, 12, 2)))
+        result = self.fixed1 + datetime.timedelta(-3)
+        self.assertEqual(result, FixedDate(date=datetime.date(2022, 12, 2)))
 
     def test_addition_does_not_modify(self):
-        _ = self.fixed1 + timedelta(2)
-        self.assertEqual(self.fixed1.datetime, datetime(2022, 12, 5))
+        _ = self.fixed1 + datetime.timedelta(2)
+        self.assertEqual(self.fixed1.date, datetime.date(2022, 12, 5))
