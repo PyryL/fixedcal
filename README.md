@@ -39,6 +39,9 @@ import datetime
 february_seventh = datetime.date(2022, 2, 7)
 fixed_date = FixedDate(february_seventh)
 
+# From fixed day of month, month and year
+fixed_date = FixedDate(day=24, month=4, year=2022)
+
 # From day's ordinal in year
 fixed_date = FixedDate(day_of_year=107, year=2022)
 ```
