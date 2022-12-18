@@ -19,9 +19,13 @@ class FixedDate:
     def __init__(self,
                 date: datetime.date = None,
                 day_of_year: int = None,
+                day: int = None,
+                month: int = None,
                 year: int = None) -> None:
         if isinstance(date, datetime.date):
             init_tuple = self._from_datetime(date)
+        elif isinstance(day, int) and isinstance(month, int) and isinstance(year, int):
+            init_tuple = self._from_fixed_date(day, month, year)
         elif isinstance(day_of_year, int) and isinstance(year, int):
             init_tuple = self._from_day_of_year(day_of_year, year)
         else:
@@ -40,6 +44,20 @@ class FixedDate:
         """
         day_of_year = date.timetuple().tm_yday
         return self._from_day_of_year(day_of_year, date.year)
+
+    def _from_fixed_date(self, day: int, month: int, year: int) -> tuple:
+        is_this_leap_year = is_leap_year(year)
+
+        maximum_allowed_day = 29 if (is_this_leap_year and month == 6) or month == 13 else 28
+        if day < 1 or day > maximum_allowed_day:
+            raise ValueError(f"Parameter day should be in range 1...{maximum_allowed_day}")
+        if month < 1 or month > 13:
+            raise ValueError("Parameter month should be in range 1...13")
+
+        day_of_year = 28*(month-1) + day
+        if is_this_leap_year and month > 6:
+            day_of_year += 1
+        return (day_of_year, year)
 
     def _from_day_of_year(self, day_of_year: int, year: int) -> tuple:
         """Initialize this class with day of year and year.
