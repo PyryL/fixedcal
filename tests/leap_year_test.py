@@ -27,12 +27,15 @@ class TestLeapYear(unittest.TestCase):
     def test_fixed_leap_day_properties(self):
         # June 17th is the leap day of fixed calendar system
         fixed_date = FixedDate(datetime.date(2024, 6, 17))
+        self.assertEqual(fixed_date.day_of_year, 169)
         self.assertEqual(fixed_date.day_of_month, 29)
         self.assertEqual(fixed_date.month, 6)
         self.assertIsNone(fixed_date.weekday)
         self.assertEqual(fixed_date.week_of_month, 4)
         self.assertEqual(fixed_date.week_of_year, 24)
         self.assertEqual(fixed_date.year_quarter, 2)
+        self.assertTrue(fixed_date.is_leap_day)
+        self.assertTrue(fixed_date.is_leap_year)
 
     def test_year_day_of_leap_year(self):
         fixed_date = FixedDate(day_of_year=366, year=2024)
